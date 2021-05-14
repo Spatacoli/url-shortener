@@ -3,12 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using url_shortener.Domain;
+using url_shortener.Domain.Interfaces;
 
 namespace url_shortener.Models
 {
     public class Shortener
     {
         public string Token { get; set; }
+
+        private readonly IUnitOfWork _unitOfWork;
 
         private SpatacoliUrl biturl;
 
@@ -25,14 +29,14 @@ namespace url_shortener.Models
             return this;
         }
 
-        public Shortener(string url)
+        public Shortener(string url, IUnitOfWork unitOfWork)
         {
-            var db = new LiteDatabase("Data/Urls.db");
-            var urls = db.GetCollection<SpatacoliUrl>();
+            _unitOfWork = unitOfWork;
+            var urls = _unitOfWork.SpatacoliUrls.GetAll();
 
             // While the token exists in our LiteDB we generate a new one
             // It basically means that if a token already exists we simply generate a new one
-            while (urls.Exists(u => u.Token == GenerateToken().Token)) ;
+            while (urls.Any(u => u.Token == GenerateToken().Token)) ;
             // Store the values in the SpatacoliUrl model
             biturl = new SpatacoliUrl()
             {
@@ -40,12 +44,13 @@ namespace url_shortener.Models
                 Url = url,
                 ShortenedUrl = "https://spataco.li/" + Token
             };
-            if (urls.Exists(u => u.Url == url))
+            if (urls.Any(u => u.Url == url))
             {
                 throw new Exception("URL already exists");
             }
             // Save the SpatacoliUrl model to the DB
-            urls.Insert(biturl);
+            _unitOfWork.SpatacoliUrls.Add(biturl);
+            _unitOfWork.Complete();
         }
     }
 }

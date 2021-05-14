@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace url_shortener.Models
+namespace url_shortener.Domain
 {
     public class SpatacoliUrl
     {
