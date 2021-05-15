@@ -1,0 +1,10 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "skeleton@2.0.4",
+      "destination": "wwwroot/lib/skeleton/"
+    }
+  ]
+}

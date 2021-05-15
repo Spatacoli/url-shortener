@@ -62,6 +62,20 @@ namespace url_shortener.Controllers
             return View();
         }
 
+        [HttpDelete, Route("/{token}")]
+        public IActionResult DeleteRoute([FromRoute] string token)
+        {
+            var entity = _unitOfWork.SpatacoliUrls.GetByToken(token);
+            _unitOfWork.SpatacoliUrls.Remove(entity);
+            _unitOfWork.Complete();
+            return Json(new UrlResponse()
+            {
+                url = entity.ShortenedUrl,
+                status = "Deleted",
+                token = entity.Token
+            });
+        }
+
         [HttpGet, Route("/{token}")]
         public IActionResult SpatacoliRedirect([FromRoute] string token)
         {

@@ -9,6 +9,9 @@ const responseArea = document.getElementById("resp-area");
 
 submitBtn.addEventListener("click", (ev) => {
     let url = urlInput.value;
+    if (url === "") {
+        return;
+    }
     fetch("/", {
         method: "POST",
         body: JSON.stringify(url),
@@ -21,3 +24,21 @@ submitBtn.addEventListener("click", (ev) => {
             responseArea.innerHTML = "<a href='https://spataco.li/" + response.token +"'>https://spataco.li/" + response.token + "</a>";
         });
 });
+
+const urls = document.getElementsByClassName("delete-url");
+[...urls].forEach(url => url.addEventListener("click", (ev) => {
+    const srcElement = ev.srcElement;
+    const token = srcElement.getAttribute("data-token");
+    fetch("/" + token, {
+        method: "DELETE",
+        body: JSON.stringify(token),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(res => res.json())
+        .then(response => {
+            console.log(response);
+            responseArea.innerHTML = response.status;
+        })
+    alert(token);
+}))
