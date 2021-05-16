@@ -7,6 +7,7 @@ using System.Security.Policy;
 using url_shortener.Models;
 using url_shortener.Domain;
 using url_shortener.Domain.Interfaces;
+using System.Diagnostics;
 
 namespace url_shortener.Controllers
 {
@@ -80,6 +81,13 @@ namespace url_shortener.Controllers
             url.Clicked++;
             _unitOfWork.Complete();
             return Redirect(url.Url);
+        }
+
+        [AllowAnonymous]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
