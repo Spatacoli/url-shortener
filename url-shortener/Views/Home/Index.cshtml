@@ -22,13 +22,13 @@
 	   <th>Delete</th>
    </tr>
   </thead>
-  @for (int i = 0; i< ViewBag.Urls.Count; i++)
+  @foreach (var Url in ViewBag.Urls)
 		{
 			<tr>
-			<td>@ViewBag.Urls[i].ShortenedUrl</td>
-			<td>@ViewBag.Urls[i].Clicked</td>
-			<td>@ViewBag.Urls[i].Url.Substring(0, Math.Min(ViewBag.Urls[i].Url.Length, 25))</td>
-			<td><button class="delete-url" data-token="@(ViewBag.Urls[i].Token)">Delete</button></td>
+			<td>@Url.ShortenedUrl</td>
+			<td>@Url.Clicked</td>
+			<td>@Url.Url.Substring(0, Math.Min(Url.Url.Length, 25))</td>
+			<td><button class="delete-url" data-token="@(Url.Token)">Delete</button></td>
 			</tr>
 		}
  </table>
