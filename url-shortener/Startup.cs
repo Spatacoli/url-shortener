@@ -50,7 +50,7 @@ namespace url_shortener
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationContext db)
         {
             if (env.IsDevelopment())
             {
@@ -63,6 +63,9 @@ namespace url_shortener
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            db.Database.EnsureCreated();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
