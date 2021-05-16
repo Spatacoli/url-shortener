@@ -1,3 +1,36 @@
 ﻿@{
     ViewData["Title"] = "Shorten your URLs and Links in style";
 }
+
+<div class="container">
+	<section class="shortener-form">
+	 <h5>Enter your link below and get it shortened, nice and easy.</h5>
+	 <div class="row">
+	  <input type="text" name="url" id="urlshort" placeholder="Shorten your URL" class="six columns" required />
+	  <button class="button-primary two columns" id="submit">Shorten</button>
+  </div>
+  <div class="resp-area inactive" id="resp-area">
+	  
+  </div>
+ </section>
+	<table class="twelve columns">
+	 <thead>
+	  <tr>
+	   <th>Shortened URL</th>
+	   <th>Click Count</th>
+	   <th>Full Url</th>
+	   <th>Delete</th>
+   </tr>
+  </thead>
+  @for (int i = 0; i< ViewBag.Urls.Count; i++)
+		{
+			<tr>
+			<td>@ViewBag.Urls[i].ShortenedUrl</td>
+			<td>@ViewBag.Urls[i].Clicked</td>
+			<td>@ViewBag.Urls[i].Url.Substring(0, Math.Min(ViewBag.Urls[i].Url.Length, 25))</td>
+			<td><button class="delete-url" data-token="@(ViewBag.Urls[i].Token)">Delete</button></td>
+			</tr>
+		}
+ </table>
+	 
+</div>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using System.Net.Http;
@@ -9,6 +10,7 @@ using url_shortener.Domain.Interfaces;
 
 namespace url_shortener.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -21,6 +23,8 @@ namespace url_shortener.Controllers
         [HttpGet, Route("/")]
         public IActionResult Index()
         {
+            var urls = _unitOfWork.SpatacoliUrls.GetAll();
+            ViewBag.Urls = urls;
             return View();
         }
 
@@ -54,14 +58,6 @@ namespace url_shortener.Controllers
             });
         }
 
-        [HttpGet, Route("/OU812")]
-        public IActionResult SpatacoliAdmin()
-        {
-            var urls = _unitOfWork.SpatacoliUrls.GetAll();
-            ViewBag.Urls = urls;
-            return View();
-        }
-
         [HttpDelete, Route("/{token}")]
         public IActionResult DeleteRoute([FromRoute] string token)
         {
@@ -76,6 +72,7 @@ namespace url_shortener.Controllers
             });
         }
 
+        [AllowAnonymous]
         [HttpGet, Route("/{token}")]
         public IActionResult SpatacoliRedirect([FromRoute] string token)
         {
