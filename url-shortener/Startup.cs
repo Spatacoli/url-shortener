@@ -63,8 +63,6 @@ namespace url_shortener
                 app.UseHsts();
             }
 
-            db.Database.EnsureCreated();
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
