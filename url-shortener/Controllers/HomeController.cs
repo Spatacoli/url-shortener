@@ -53,7 +53,7 @@ namespace url_shortener.Controllers
             Shortener shortener = new Shortener(url, _unitOfWork);
             return Json(new UrlResponse()
             {
-                url = "https://spataco.li/" + shortener.Token,
+                url = "https://sptc.li/" + shortener.Token,
                 status = "Ok",
                 token = shortener.Token
             });

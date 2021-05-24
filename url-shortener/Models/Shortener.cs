@@ -41,7 +41,7 @@ namespace url_shortener.Models
             {
                 Token = Token,
                 Url = url,
-                ShortenedUrl = "https://spataco.li/" + Token
+                ShortenedUrl = "https://sptc.li/" + Token
             };
             if (urls.Any(u => u.Url == url))
             {

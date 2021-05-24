@@ -21,7 +21,7 @@ submitBtn.addEventListener("click", (ev) => {
     }).then(res => res.json())
         .then(response => {
             console.log(response);
-            responseArea.innerHTML = "<a href='https://spataco.li/" + response.token +"'>https://spataco.li/" + response.token + "</a>";
+            responseArea.innerHTML = "<a href='https://sptc.li/" + response.token +"'>https://sptc.li/" + response.token + "</a>";
         });
 });
 
