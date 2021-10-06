@@ -80,7 +80,7 @@ namespace url_shortener.Controllers
             var url = _unitOfWork.SpatacoliUrls.GetByToken(token);
             if (url == null)
             {
-                return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+                return RedirectToAction("Error", "Home");
             }
             else
             {
