@@ -80,7 +80,7 @@ namespace url_shortener.Controllers
             var url = _unitOfWork.SpatacoliUrls.GetByToken(token);
             if (url == null)
             {
-                return BadRequest(null);
+                return Error();
             }
             url.Clicked++;
             _unitOfWork.Complete();
