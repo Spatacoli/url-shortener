@@ -78,6 +78,10 @@ namespace url_shortener.Controllers
         public IActionResult SpatacoliRedirect([FromRoute] string token)
         {
             var url = _unitOfWork.SpatacoliUrls.GetByToken(token);
+            if (url == null)
+            {
+                return BadRequest(null);
+            }
             url.Clicked++;
             _unitOfWork.Complete();
             return Redirect(url.Url);
